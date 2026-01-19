@@ -44,22 +44,37 @@ document.addEventListener("DOMContentLoaded", async() => {
         const email = getElement("#email").value;
 
         // make API POST request to add email to list
-        alert("Error: Add email not working yet.");
-
+        try {
+            const post = await fetch(url ,{
+                method: 'POST',
+                headers: {'Content-type': 'application/json; charset=UTF-8'},
+                body: JSON.stringify({name, email})
+            })
+        } catch(e) {
+            alert(e.message);
+            // alert("Error: Add email not working yet.");            
+        }
         // make API GET request to display updated data
     });
 
     getElement("#delete_email").addEventListener("click", async() => {
         // get selected email
         const id = getElement("#emails").value;
-
+        
         if (id == "") {
             alert ("Please select an email to delete.");
             return;
         } 
+        
+        try {
+            const del = await fetch(url + id, {method:'DELETE'})
+        }catch(e) {
+            alert(e.message);
+        }
+        
 
         // make API DELETE request to delete email from list
-        alert("Error: Delete email not working yet.");
+        // alert("Error: Delete email not working yet.");
 
         // make API GET request to display updated data
     });
