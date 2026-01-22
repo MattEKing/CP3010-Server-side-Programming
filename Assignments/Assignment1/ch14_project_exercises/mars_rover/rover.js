@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (e) {
         alert(e.message)
     }
+
     // change event handler for Rover drop-down
     getElement("#rover").addEventListener("change", async (evt) => {
         displayRover(json.rovers[getElement("#rover").value - 1])
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         displayImage(year, month, date, camera);
     });
 
- 
+    getElement("#month").addEventListener("change", () => displayRover(json.rovers[getElement("#rover").value - 1]));
 });
 const displayRover = (rover) => {
         const selectRover = rover;
@@ -64,8 +65,10 @@ const displayDate = (landing_date, max_date) => {
     const max = new Date(max_date.split("-")); 
 
     const years = getElement("#year");
+    years.textContent = "";
     const months = getElement("#month");
     const days = getElement("#date");
+    days.textContent = "";
 
     for (let Year = landing.getFullYear(); landing.getFullYear() <= Year && Year <= max.getFullYear(); Year++) {
         const option = document.createElement("option");
@@ -83,7 +86,8 @@ const displayDate = (landing_date, max_date) => {
         months.appendChild(option);
     }
 
-    for (let Day = 1; 1 <= Day && Day <= 31; Day++) {
+    let setDays = dayOfMonth(years.value, months.value);
+    for (let Day = 1; 1 <= Day && Day <= setDays; Day++) {
         const option = document.createElement("option");
         option.value = Day;
         const text = Day;
@@ -93,7 +97,6 @@ const displayDate = (landing_date, max_date) => {
 }
 
 const selectImage = (rover) => {
-    console.log(rover);
     for (let cameras of rover.cameras) {
             const option = document.createElement("option");
             option.value = cameras.name;
@@ -105,12 +108,16 @@ const selectImage = (rover) => {
 
 const displayImage = async(year, month, date, camera) => {
     const response = await fetch(`https://rovers.nebulum.one/api/v1/rovers/Curiosity/photos/?earth_date=${year}-${month}-${date}&camera=${camera}`);
-    const json = await response.json()
-    console.log(json); 
+    const json = await response.json();
 
+    getElement("#display").textContent = "";
     for (let image of json.photos) {
             const option = document.createElement("img");
             option.src = image.img_src;
             getElement("#display").appendChild(option);   
         }
+}
+
+function dayOfMonth(year, month) {
+    return new Date(year, month, 0).getDate()
 }
