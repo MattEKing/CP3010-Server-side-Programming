@@ -1,14 +1,24 @@
  
- document.addEventListener('DOMContentLoaded', () => {
+const weatherURL = "http://localhost:3000/api/weather"
+
+ document.addEventListener('DOMContentLoaded', async() => {
     const select = document.getElementById('citySelect');
     const display = document.getElementById('cityDisplay');
 
-    select.addEventListener('change', () => {
+    select.addEventListener('change', async() => {
         if (select.value === "") {
             display.textContent = "No city selected.";
         } else {
             const selectedText = select.options[select.selectedIndex].text;
             display.textContent = "You selected: " + selectedText;
-        }
+
+            let weather = await fetch(weatherURL, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({"city": selectedText})
+                })
+                let response = await weather.json();
+                console.log(response);
+                    }
     });
 });
