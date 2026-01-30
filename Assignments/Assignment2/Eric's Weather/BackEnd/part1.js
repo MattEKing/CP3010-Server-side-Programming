@@ -34,7 +34,7 @@ app.listen(3000, () => {
     console.log("Listening on port 3000");
 });
 
-app.post("https://api.openweathermap.org/data/3.0/onecall?lat={43.6548}&lon={79.3884}&exclude={current}&appid={8d4bf9966334542ae21243ea9ad16876}", (request, response) => {
+app.post("/api/weather", (request, response) => {
     const city = request.body.city;
     const weather = json[city]; 
     console.log(weather)
