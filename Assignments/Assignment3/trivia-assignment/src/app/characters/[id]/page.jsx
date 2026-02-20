@@ -1,5 +1,5 @@
 
-import CharacterDetails from "../characterDetails."
+import CharacterDetails from "../../components/characterDetails."
 
 export default async function({params}) {
 

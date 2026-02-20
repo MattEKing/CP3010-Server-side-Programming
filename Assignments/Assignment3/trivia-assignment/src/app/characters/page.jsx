@@ -1,4 +1,4 @@
-import Character from "./character.jsx";
+import Character from "../components/character.jsx";
 
 export default async function () {
 
