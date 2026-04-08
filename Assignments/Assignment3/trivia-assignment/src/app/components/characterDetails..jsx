@@ -1,7 +1,7 @@
 
 export default async function CharacterDetails(params) {
     
-    let response = await fetch('https://rickandmortyapi.com/api/character/' + params.id);
+    let response = await fetch('https://localhost:3000/api/character/' + params.id);
     let data = await response.json();
     console.log(data);
     return (

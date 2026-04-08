@@ -2,7 +2,7 @@ import Character from "../components/character.jsx";
 
 export default async function () {
 
-    let response = await fetch('https://rickandmortyapi.com/api/character');
+    let response = await fetch('https://localhost:3000/api/character');
     let charJSON = await response.json();
     let characters = charJSON.results;
     // console.log(characters);
@@ -16,8 +16,8 @@ export default async function () {
             </h1>
             <ui>
                 {characters.map(char =>
-                    <li key={char.id}>
-                        <Character id={char.id} name={char.name}/>
+                    <li key={char._id}>
+                        <Character id={char._id} name={char.name}/>
                     </li>
                 )}
             </ui>
